@@ -15,15 +15,15 @@ def main():
 
     try:   
         weapon1 = Weapon("Spada Lunga", 5, 12, "melee")
-    except Exception as e:
+    except ValueError as e:
         print(f"Errore sconosciuto nella creazione dell'arma per {p1.name}: {str(e)}")
-        weapon1 = Weapon("Spada Lunga", 5, 12, "melee")
+        return 1
 
     try:
         weapon2 = Weapon("Balestra pesante", 4, 12, "Ranged")
-    except Exception as e:
+    except ValueError as e:
         print(f"Errore sconosciuto nella creazione dell'arma per {p2.name}: {str(e)}")
-        weapon2 = Weapon("Balestra pesante", 4, 12, "Ranged")
+        return 1
 
     setup_potions(p1)
     setup_potions(p2)
@@ -49,24 +49,14 @@ def main():
         print(f"--- Turno {turns} ---")
         try:
             potion = p1.should_use_potion()
-        except ValueError as e:
-            print(f"{p1.name} tenta usare {potion}, ma si verifica un errore: {str(e)}")
-        except TypeError as e:
-            print(f"{p1.name} tenta usare {potion}, ma si verifica un errore: {str(e)}")
-        except Exception as e:
+        except (ValueError, TypeError) as e:
             print(f"{p1.name} tenta usare {potion}, ma si verifica un errore: {str(e)}")
         if potion is not None:
             print(f"{p1.name} usa {potion}")
 
         try:
             damage1 = p1.attack(p2)
-        except ValueError as e:
-            print(f"Errore durante l'attacco di {p1.name}: {str(e)}")
-            damage1 = 0
-        except TypeError as e:
-            print(f"Errore durante l'attacco di {p1.name}: {str(e)}")
-            damage1 = 0
-        except Exception as e:
+        except (ValueError, TypeError) as e:
             print(f"Errore durante l'attacco di {p1.name}: {str(e)}")
             damage1 = 0
         action(p1, p2, damage1)
@@ -76,24 +66,14 @@ def main():
 
         try:
             potion = p2.should_use_potion()
-        except ValueError as e:
-            print(f"{p2.name} tenta usare {potion}, ma si verifica un errore: {str(e)}")
-        except TypeError as e:
-            print(f"{p2.name} tenta usare {potion}, ma si verifica un errore: {str(e)}")
-        except Exception as e:
+        except (ValueError, TypeError) as e:
             print(f"{p2.name} tenta usare {potion}, ma si verifica un errore: {str(e)}")
         if potion is not None:
             print(f"{p2.name} usa {potion}")
 
         try:
             damage2 = p2.attack(p1)
-        except ValueError as e:
-            print(f"Errore durante l'attacco di {p2.name}: {str(e)}")
-            damage2 = 0
-        except TypeError as e:
-            print(f"Errore durante l'attacco di {p2.name}: {str(e)}")
-            damage2 = 0
-        except Exception as e:
+        except (ValueError, TypeError) as e:
             print(f"Errore durante l'attacco di {p2.name}: {str(e)}")
             damage2 = 0
         action(p2, p1, damage2)
