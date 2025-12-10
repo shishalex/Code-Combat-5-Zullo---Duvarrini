@@ -13,7 +13,7 @@ def show_default_weapon(player_name, default_weapon_name):
 
 
 def show_initial_stats(p1_name, p2_name, p1_hp, p2_hp, p1_max_hp, p2_max_hp, p1_str, p2_str, p1_dex, p2_dex):
-    print(f"{p1_name} (HP: {p1_hp}/{p1_max_hp}, STR: {p1_str}, DEX: {p1_dex}"
+    print(f"{p1_name} (HP: {p1_hp}/{p1_max_hp}, STR: {p1_str}, DEX: {p1_dex})\n"
           f"{p2_name} (HP: {p2_hp}/{p2_max_hp}, STR: {p2_str}, DEX: {p2_dex})")
 
 
