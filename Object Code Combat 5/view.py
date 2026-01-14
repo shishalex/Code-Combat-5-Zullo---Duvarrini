@@ -51,3 +51,7 @@ def show_attack_result(attacker_name, defender_name, damage, eff_stat):
 
 def show_winner(winner_name):
     print(f"🏆 {Style.BRIGHT}{Fore.YELLOW}Combattimento finito! Il vincitore è... {winner_name}!!! 🏆")
+
+
+def show_draw():
+    print(f"👏 {Style.BRIGHT}{Fore.LIGHTWHITE_EX}Combattimento finito! C'è stato un pareggio!! 👏")
