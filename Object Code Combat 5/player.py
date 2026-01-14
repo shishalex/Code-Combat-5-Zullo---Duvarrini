@@ -81,10 +81,6 @@ class Player:
 
     def tick_buffs(self) -> None:
         self.__buffs = [(stat, amount, duration - 1) for stat, amount, duration in self.__buffs if duration > 1]
-
-    def __str__(self):
-        return (f"[{self.name}] \nForza: {self.strength}\nDestrezza: {self.dexterity}\n"
-                f"HP massimi: {self.max_health}\nHP attuali: {self.health}")
     
     def use_potion(self, potion: Potion) -> dict:
         if potion not in self.__potions:
@@ -108,6 +104,15 @@ class Player:
                 return potion
         
         return None
+
+    def get_state_dict(self):
+        return {
+            "name": self.name,
+            "health": self.health,
+            "max_health": self.max_health,
+            "strength": self.strength,
+            "dexterity": self.dexterity,
+        }
 
     @property
     def name(self) -> str:

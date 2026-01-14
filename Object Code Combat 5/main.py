@@ -13,30 +13,31 @@ def main():
     print(p2)
     print(" ")
 
-    try:   
+    try:
         weapon1 = Weapon("Spada Lunga", 5, 12, "melee")
     except ValueError as e:
         print(f"Errore sconosciuto nella creazione dell'arma per {p1.name}: {str(e)}")
         return 1
-
     try:
         weapon2 = Weapon("Balestra pesante", 4, 12, "Ranged")
     except ValueError as e:
         print(f"Errore sconosciuto nella creazione dell'arma per {p2.name}: {str(e)}")
         return 1
 
-    setup_potions(p1)
-    setup_potions(p2)
-
     try:
         p1.weapon = weapon1
     except TypeError as e:
         print(f"Errore nell'equipaggiare l'arma per {p1.name}: {str(e)}")
-
+        p1.weapon = None
     try:
         p2.weapon = weapon2
     except TypeError as e:
         print(f"Errore nell'equipaggiare l'arma per {p2.name}: {str(e)}")
+        p2.weapon = None
+
+    setup_potions(p1)
+    setup_potions(p2)
+
 
     weapon_equip(p1.name, weapon1)
     weapon_equip(p2.name, weapon2)
