@@ -3,6 +3,7 @@ from potion import Potion
 from weapon import Weapon
 import view
 
+
 class GameController:
     def __init__(self, player1: Player, player2: Player):
         self.player1 = player1
@@ -41,65 +42,67 @@ class GameController:
         view.show_weapon_equip(self.player2.name, weapon2)
 
         turns = 0
-        while True:
-            self.handle_turns(turns)
-            try:
-                player1_alive = self.player1.is_alive()
-            except Exception as e:
-                view.show_action_failure(self.player1.name, "Status", "Failure in checking Player Status")
-                player1_alive = False
-            try:
-                player2_alive = self.player2.is_alive()
-            except Exception as e:
-                view.show_action_failure(self.player2.name, "Status", "Failure in checking Player Status")
-                player2_alive = False
 
-            if player1_alive and not player2_alive:
-                view.show_winner(self.player1)
-                break
-            elif player2_alive and not player1_alive:
-                view.show_winner(self.player2)
-                break
-            else:
-                view.show_draw()
-                break
+        self.handle_turns(turns)
 
     def handle_turns(self, turns):
-        turns += 1
-        view.show_turn_header(turns)
-        try:
-            potion = p1.should_use_potion()
-        except (ValueError, TypeError) as e:
-            print(f"{p1.name} tenta usare {potion}, ma si verifica un errore: {str(e)}")
-        if potion is not None:
-            print(f"{p1.name} usa {potion}")
+        while True:
+            turns += 1
+            view.show_turn_header(turns)
+            try:
+                potion1 = self.player1.should_use_potion()
+            except (ValueError, TypeError) as e:
+                view.show_action_failure(self.player1.name, "Using a Potion", e)
+            if potion1 is not None:
+                view.show_potion_success(potion1.get_state_dict(), self.player1.get_state_dict())
+
+            try:
+                damage1 = self.player1.attack(self.player2)
+            except (ValueError, TypeError) as e:
+                view.show_action_failure(self.player1.name, "Attack", e)
+                damage1 = 0
+            view.show_attack_result(self.player1.name, self.player2.name, damage1, self.player2.health)
+
+            if not self.player2.is_alive():
+                break
+
+            try:
+                potion2 = self.player1.should_use_potion()
+            except (ValueError, TypeError) as e:
+                view.show_action_failure(self.player2.name, "Using a Potion", e)
+            if potion2 is not None:
+                view.show_potion_success(potion2.get_state_dict(), self.player2.get_state_dict())
+
+            try:
+                damage2 = self.player2.attack(self.player1)
+            except (ValueError, TypeError) as e:
+                view.show_action_failure(self.player2.name, "Attack", e)
+                damage2 = 0
+            view.show_attack_result(self.player2.name, self.player1.name, damage2, self.player1.health)
+
+            self.player1.tick_buffs()
+            self.player2.tick_buffs()
+
+            if not self.player1.is_alive() or not self.player2.is_alive():
+                break
 
         try:
-            damage1 = p1.attack(p2)
-        except (ValueError, TypeError) as e:
-            print(f"Errore durante l'attacco di {p1.name}: {str(e)}")
-            damage1 = 0
-        action(p1, p2, damage1)
-
-        if not p2.is_alive():
-            break
-
+            player1_alive = self.player1.is_alive()
+        except ValueError as e:
+            view.show_action_failure(self.player1.name, "Status", "Failure in checking Player Status")
+            player1_alive = False
         try:
-            potion = p2.should_use_potion()
-        except (ValueError, TypeError) as e:
-            print(f"{p2.name} tenta usare {potion}, ma si verifica un errore: {str(e)}")
-        if potion is not None:
-            print(f"{p2.name} usa {potion}")
+            player2_alive = self.player2.is_alive()
+        except ValueError as e:
+            view.show_action_failure(self.player2.name, "Status", "Failure in checking Player Status")
+            player2_alive = False
+        if player1_alive and not player2_alive:
+            view.show_winner(self.player1.name)
+        elif player2_alive and not player1_alive:
+            view.show_winner(self.player2.name)
+        else:
+            view.show_draw()
 
-        try:
-            damage2 = p2.attack(p1)
-        except (ValueError, TypeError) as e:
-            print(f"Errore durante l'attacco di {p2.name}: {str(e)}")
-            damage2 = 0
-        action(p2, p1, damage2)
-
-        p1.tick_buffs()
-        p2.tick_buffs()
 
     def setup_potions(self, player: Player) -> None:
         player.potions.append(Potion("Healing Draught", "heal", 10, 0))
@@ -110,3 +113,4 @@ class GameController:
             player.potions.append(Potion("Ogre Tonic", "buff_str", 2, 3))
         else:
             player.potions.append(Potion("Cat's Grace", "buff_dex", 2, 3))
+

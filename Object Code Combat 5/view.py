@@ -57,8 +57,8 @@ def show_attack_result(attacker_name: str, defender_name: str, damage: int, defe
 
 
 def show_winner(winner_name: str):
-    print(f"🏆 {Style.BRIGHT}{Fore.YELLOW}Combattimento finito! Il vincitore è... {winner_name}!!! 🏆")
+    print(f"\n🏆 {Style.BRIGHT}{Fore.YELLOW}Combattimento finito! Il vincitore è... {winner_name}!!! 🏆")
 
 
 def show_draw():
-    print(f"👏 {Style.BRIGHT}{Fore.LIGHTWHITE_EX}Combattimento finito! C'è stato un pareggio!! 👏")
+    print(f"\n👏 {Style.BRIGHT}{Fore.LIGHTWHITE_EX}Combattimento finito! C'è stato un pareggio!! 👏")

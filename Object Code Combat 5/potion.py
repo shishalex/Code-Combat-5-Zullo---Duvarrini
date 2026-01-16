@@ -41,11 +41,19 @@ class Potion:
             
         return {"effect":self.effect, "amount":self.amount, "duration":self.duration}
 
+    def get_state_dict(self):
+        return {
+            "name": self.name,
+            "effect": self.effect,
+            "amount": self.amount,
+            "duration": self.duration,
+        }
+
     def __str__(self):
         if self.effect == "heal":
             return f"{self.name}({self.effect} +{self.amount})"
         else:
-            return f"{self.name}({self.effect} +{self.amount} for {self.duration} turns)"
+            return f"{self.name}({self.effect} +{self.amount} per {self.duration} turni)"
 
     @property
     def name(self):
