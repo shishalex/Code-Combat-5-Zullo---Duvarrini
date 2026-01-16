@@ -51,9 +51,9 @@ def show_potion_success(potion: dict, player_stats: dict):
             f"✨ {player_stats["name"]} usa la pozione: {Fore.LIGHTYELLOW_EX}{potion["effect"]}{Fore.RESET} -> {player_stats["name"]} Fora: {Fore.LIGHTYELLOW_EX}{player_stats["strength"]}")
 
 
-def show_attack_result(attacker_name: str, defender_name: str, damage: int, defender_health: int):
-    print(f"⚔️ {Fore.RED}{attacker_name}{Fore.RESET} colpisce {Fore.GREEN}{defender_name}{Fore.RESET} "
-          f"infliggendo {damage} danni. Vita di {defender_name} rimasta: {defender_health}")
+def show_attack_result(attacker: dict, defender: dict, damage: int):
+    print(f"⚔️ {Fore.RED}{attacker["name"]}{Fore.RESET} colpisce {Fore.GREEN}{defender["name"]}{Fore.RESET} "
+          f"infliggendo {damage} danni. Vita di {defender["name"]} rimasta: {defender["health"]}")
 
 
 def show_winner(winner_name: str):
