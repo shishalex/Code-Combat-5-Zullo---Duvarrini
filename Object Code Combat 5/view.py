@@ -33,7 +33,7 @@ def show_potion_decision(player_name: str, potion_name: str):
     print(f"{player_name} decide di usare {Fore.LIGHTBLUE_EX}{potion_name}{Fore.RESET}.")
 
 
-def show_action_failure(player_name: str, action_name, reason: str):
+def show_action_failure(player_name: str, action_name, reason):
     print(f"‼️ Errore: {Fore.LIGHTRED_EX}{action_name}"
           f"{Fore.RESET}. Giocatore: {Fore.LIGHTRED_EX}{player_name}"
           f"{Fore.RESET}. Motivo: {Fore.LIGHTRED_EX}{reason}")

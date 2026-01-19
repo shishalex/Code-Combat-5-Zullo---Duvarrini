@@ -9,6 +9,7 @@ class GameController:
         self.player1 = player1
         self.player2 = player2
 
+
     def start_game_loop(self):
         view.show_welcome()
         view.show_initial_stats(self.player1.get_state_dict(), self.player2.get_state_dict())
@@ -61,7 +62,7 @@ class GameController:
             except (ValueError, TypeError) as e:
                 view.show_action_failure(self.player1.name, "Attack", e)
                 damage1 = 0
-            view.show_attack_result(self.player1.name, self.player2.name, damage1, self.player2.health)
+            view.show_attack_result(self.player1.get_state_dict(), self.player2.get_state_dict(), damage1)
 
             if not self.player2.is_alive():
                 break
@@ -78,7 +79,7 @@ class GameController:
             except (ValueError, TypeError) as e:
                 view.show_action_failure(self.player2.name, "Attack", e)
                 damage2 = 0
-            view.show_attack_result(self.player2.name, self.player1.name, damage2, self.player1.health)
+            view.show_attack_result(self.player2.get_state_dict(), self.player1.get_state_dict(), damage2)
 
             self.player1.tick_buffs()
             self.player2.tick_buffs()
@@ -89,12 +90,12 @@ class GameController:
         try:
             player1_alive = self.player1.is_alive()
         except ValueError as e:
-            view.show_action_failure(self.player1.name, "Status", "Failure in checking Player Status")
+            view.show_action_failure(self.player1.name, "Checking Player Status", e)
             player1_alive = False
         try:
             player2_alive = self.player2.is_alive()
         except ValueError as e:
-            view.show_action_failure(self.player2.name, "Status", "Failure in checking Player Status")
+            view.show_action_failure(self.player2.name, "Checking Player Status", e)
             player2_alive = False
         if player1_alive and not player2_alive:
             view.show_winner(self.player1.name)
